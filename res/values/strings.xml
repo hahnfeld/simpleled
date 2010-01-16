@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="disclaimer">IMPORTANT DISCLAIMER: This application uses unpublished Android services to enable your camera\'s LED(s), and MAY DAMAGE YOUR PHONE.  Long-term use of the camera flash has not been tested.\n\nUse the application\'s icon to turn the LED(s) on and off.</string>
+    <string name="accept">I Accept</string>
+    <string name="app_name">SimpleLED</string>
+</resources>
