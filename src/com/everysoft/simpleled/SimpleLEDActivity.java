@@ -1,12 +1,29 @@
+/*
+ * SimpleLED
+ * Copyright (C) 2010 EverySoft
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package com.everysoft.simpleled;
 
-import java.lang.reflect.Field;
+import com.droidled.demo.DroidLED;
+
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Vibrator;
-import android.os.IHardwareService;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
@@ -23,22 +40,8 @@ public class SimpleLEDActivity extends Activity implements OnClickListener {
 
 		if (prefs.getBoolean("enabled", false)) {
 			try {
-				/* We know the Vibrator object has a reference to the hardware
-				 * service, so get it using reflection.  This is evil, and will
-				 * break if the implementation of Vibrator changes, but it's
-				 * probably the cleanest way to get what we need.  Thanks to
-				 * the codetastrophe blog for this idea! 
-				 */
-				Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-				Field f = Class.forName(vibrator.getClass().getName()).getDeclaredField("mService");  
-				f.setAccessible(true);
-				IHardwareService hardware = (IHardwareService)f.get(vibrator);
-				if (hardware.getFlashlightEnabled()) {
-					hardware.setFlashlightEnabled(false);
-				}
-				else {
-					hardware.setFlashlightEnabled(true);
-				}
+				DroidLED dl = new DroidLED();
+				dl.enable(!dl.isEnabled());
 			} catch (Exception e) {
 				Log.e("SimpleLED", e.getMessage());
 			}
